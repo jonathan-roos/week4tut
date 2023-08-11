@@ -1,1 +1,17 @@
-<p>login works!</p>
+<form>
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+      <input type="email" [(ngModel)]="email" name="email" id="emailInput" class="form-control"/>
+      <label class="form-label" for="emailInput">Email address</label>
+    </div>
+  
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+      <input type="password" [(ngModel)]="pwd" name="pwd" id="pwdInput" class="form-control"/>
+      <label class="form-label" for="pwdInput">Password</label>
+    </div>
+  
+    <!-- Submit button -->
+    <button type="button" class="btn btn-primary btn-block mb-4" (click)="formSubmitted()">Sign in</button>
+  
+</form>
