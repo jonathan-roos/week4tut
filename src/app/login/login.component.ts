@@ -1,36 +1,64 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router'
+import { Component,OnInit,inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
+import {User} from "../user";
+import {Router} from "@angular/router";
+import { FormsModule } from '@angular/forms';
+import { LoggerService } from '../services/logger.service'
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+
+export class LoginComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private loggerService: LoggerService) {};
+
+  errormsg = "";
+  newUser: User = new User();
   email:string = "";
   pwd:string = "";
-  error:string ="";
+  loggedIn:boolean = false;
 
-  users = [
-    {email:"test@123.com", pwd:"123"},
-    {email:"test@456.com", pwd:"456"},
-    {email:"test@789.com", pwd:"789"}
-  ];
+  ngOnInit() {
+    if (sessionStorage.getItem('currentUser')){
+      this.loggedIn = true;
+    }else{
+      this.loggedIn = false;
+    }
+  };
 
-  constructor(private router:Router) {};
-
-  login() {
-    const loginCredentials = this.users.find(
-      user => user.email === this.email && user.pwd === this.pwd
-    );
-
-    if (loginCredentials) {
-      this.router.navigate(['/account']);
-    } else {
-      this.error = "Invalid Credentials"
-      alert(this.error);
-      this.email="";
-      this.pwd="";
-    };
+  signIn(event: any) {
+    console.log("at signin");
+    event.preventDefault();
+    this.authService.login(this.email,this.pwd).subscribe({
+      next:
+        (data)=>{
+          if (data.valid == true){
+            this.newUser = new User(data.username, data.email)
+            this.newUser.age = data.age;
+            this.newUser.birthdate = data.birthdate;
+            this.newUser.valid = true;
+            this.authService.setCurrentUser(this.newUser);
+            this.router.navigate(['/profile']);
+          }else{
+           
+            this.errormsg = "There is a problem with the credentials";
+          }
+      
+      error: () => {
+        this.errormsg = "There is a problem with the credentials";
+        this.loggerService.error(this.errormsg)
+      }
+        
+      }
+      
+   
+    })
   };
 }
