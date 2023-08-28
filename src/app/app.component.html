@@ -1,35 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/account">Account</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/profile">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="logout($event)">Logout</a>
-          </li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav mr-auto"> <!-- Use mr-auto to push items to the left -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/account">Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profile">Profile</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav"> <!-- This ul contains the Logout button -->
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout($event)">Logout</a>
+        </li>
+      </ul>
     </div>
-  </nav>
-   <div class="container">
-    <router-outlet></router-outlet>
-   </div>
-</body>
-</html>
+  </div>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+

@@ -14,18 +14,40 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private loggerService: LoggerService){}
 
-  currentUser = new User()
-  username = '';
-  birthdate = '';
-  age = 0;
-  email = '';
+  currentUser: User = new User()
+  username: string = '';
+  birthdate: string = '';
+  age: number = 0;
+  email: string = '';
+  loggedIn: boolean = false;
 
   ngOnInit(){
     this.currentUser = JSON.parse(this.authService.getCurrentUser() || '{}');
-    this.loggerService.logUser(this.currentUser)
+    if (this.authService.isLoggedIn()) {
+      this.loggerService.logUser(this.currentUser)
+      this.username = this.currentUser.username;
+      this.birthdate = this.currentUser.birthdate;
+      this.age = this.currentUser.age;
+      this.email = this.currentUser.email;
+      this.loggedIn=true
+    }else{
+      this.loggedIn=false
+    }
+    
+  }
+
+  cancelUpdate(event: any){
     this.username = this.currentUser.username;
     this.birthdate = this.currentUser.birthdate;
     this.age = this.currentUser.age;
     this.email = this.currentUser.email;
+  }
+
+  submitChange(event: any){
+    this.currentUser.age = this.age;
+    this.currentUser.birthdate = this.birthdate;
+    this.currentUser.email = this.email;
+    this.currentUser.username = this.username;
+    this.authService.setCurrentUser(this.currentUser)
   }
 }

@@ -1,5 +1,5 @@
-<div *ngIf="!loggedIn">
-  <form (submit)="signIn($event)">
+<div *ngIf="!loggedIn" class="d-flex justify-content-center align-items-center mt-5">
+  <form (submit)="signIn($event)" class="w-75">
     <!-- Email input -->
     <div class="form-outline mb-4">
       <input type="email" [(ngModel)]="email" name="email" id="emailInput" class="form-control"/>
@@ -12,11 +12,14 @@
       <label class="form-label" for="pwdInput">Password</label>
     </div>
   
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-  
+    <!-- Submit button with custom column width -->
+    <div class="row">
+      <div class="col-6 mx-auto"> <!-- Adjust the column width as needed -->
+        <button type="submit" class="btn btn-primary btn-block mb-2">Sign in</button>
+      </div>
+    </div>
   </form>
 </div>
-<div *ngIf="loggedIn">
-  <h3> You are already logged in.</h3>
-</div> 
+<div *ngIf="loggedIn" class="text-center mt-5">
+  <h3>You are already logged in.</h3>
+</div>

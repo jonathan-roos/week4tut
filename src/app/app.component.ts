@@ -8,7 +8,7 @@ import { AuthService } from './services/auth.service'
 })
 export class AppComponent {
   title = 'week4tut';
-  
+
   constructor(private authService: AuthService){}
 
   logout(event: any){
